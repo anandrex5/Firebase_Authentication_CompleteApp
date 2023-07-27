@@ -24,7 +24,7 @@ class SignUpActivity : AppCompatActivity() {
             val userEmail = signUpBinding.editTextEmailSignup.text.toString()
             val userPassword = signUpBinding.editTextPasswordSignup.text.toString()
 
-            //call
+            //call signupWithFirebase
             signupWithFirebase(userEmail,userPassword)
 
         }

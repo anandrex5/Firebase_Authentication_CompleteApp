@@ -22,17 +22,33 @@ class LoginActivity : AppCompatActivity() {
 
         loginBinding.buttonSignin.setOnClickListener {
 
+
             val userEmail = loginBinding.editTextEmailSignin.text.toString()
             val userPassword = loginBinding.editTextPasswordSignin.text.toString()
 
-            //call
-            singinWithFirebase(userEmail,userPassword)
+
+            if (userEmail.isBlank() || userPassword.isBlank()){
+                Toast.makeText(applicationContext,"Enter the details ",Toast.LENGTH_SHORT).show()
+            }else {
+                //call
+                singinWithFirebase(userEmail, userPassword)
+            }
 
         }
         loginBinding.buttonSignup.setOnClickListener {
 
             val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
             startActivity(intent)
+        }
+
+        loginBinding.buttonForgot.setOnClickListener {
+            val intent = Intent(this, ForgetPasswordActivity::class.java)
+            startActivity(intent)
+        }
+        loginBinding.buttonSigninWithPhoneNumber.setOnClickListener {
+            val intent= Intent(this,PhoneActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
     fun singinWithFirebase(userEmail:String, userPassword: String) {
@@ -49,5 +65,15 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext,task?.exception.toString(),Toast.LENGTH_SHORT).show()
                 }
             }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val user = auth.currentUser
+        if (user!= null){
+            val intent = Intent(this@LoginActivity,MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 }
